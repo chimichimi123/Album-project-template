@@ -55,6 +55,7 @@ with app.app_context():
         data = fetch_album_data(album_name)
         if data:
             release_date = data['release_date']
+            # Handling different date formats from Spotify API
             if len(release_date) == 4:
                 release_date = datetime.strptime(release_date, "%Y")
             elif len(release_date) == 7:
@@ -62,12 +63,15 @@ with app.app_context():
             else:
                 release_date = datetime.strptime(release_date, "%Y-%m-%d")
 
+            embed_link = f"https://open.spotify.com/embed/album/{data['id']}?utm_source=generator&theme=0"
+
             album = Album(
                 title=data['name'],
                 artist=data['artists'][0]['name'],
-                genre=', '.join(data.get('genres', [])),
+                genre=', '.join(data.get('genres', [])),  # Safely get genres
                 release_date=release_date,
-                cover_image=data['images'][0]['url'] if data['images'] else None
+                cover_image=data['images'][0]['url'] if data['images'] else None,
+                embed_link=embed_link
             )
             albums.append(album)
             db.session.add(album)
