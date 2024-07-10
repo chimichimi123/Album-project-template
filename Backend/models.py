@@ -8,6 +8,8 @@ from config import db
 # Models go here!
 
 class Album(db.Model, SerializerMixin):
+    
+    __tablename__ = 'albums'
     serialize_rules = ('-reviews',)
     
     id = db.Column(db.Integer, primary_key=True)
@@ -17,19 +19,10 @@ class Album(db.Model, SerializerMixin):
     release_date = db.Column(db.Date, nullable=False)
     cover_image = db.Column(db.String(255), nullable=True)
     reviews = db.relationship('Review', backref='album', lazy=True)
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'title': self.title,
-            'artist': self.artist,
-            'genre': self.genre,
-            'release_date': self.release_date.strftime('%Y-%m-%d'),
-            'cover_image': self.cover_image,
-            'reviews': [review.to_dict() for review in self.reviews]
-        }
+    
 
 class Member(db.Model, SerializerMixin):
+    __tablename__ = 'members'
     serialize_rules = ('-reviews',)
     
     id = db.Column(db.Integer, primary_key=True)
@@ -37,20 +30,14 @@ class Member(db.Model, SerializerMixin):
     email = db.Column(db.String(100), unique=True, nullable=False)
     join_date = db.Column(db.DateTime, default=func.now())
     reviews = db.relationship('Review', backref='member', lazy=True)
+    
 
 class Review(db.Model, SerializerMixin):
+    __tablename__ = 'reviews'
+    
     id = db.Column(db.Integer, primary_key=True)
-    album_id = db.Column(db.Integer, db.ForeignKey('album.id'), nullable=False)
-    member_id = db.Column(db.Integer, db.ForeignKey('member.id'), nullable=False)
+    album_id = db.Column(db.Integer, db.ForeignKey('albums.id'), nullable=False)
+    member_id = db.Column(db.Integer, db.ForeignKey('members.id'), nullable=False)
     review_date = db.Column(db.DateTime, default=func.now())
     rating = db.Column(db.Integer, nullable=False)
     comment = db.Column(db.Text, nullable=False)
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'album_id': self.album_id,
-            'member_id': self.member_id,
-            'rating': self.rating,
-            'comment': self.comment,
-        }
