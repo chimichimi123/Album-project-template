@@ -1,6 +1,7 @@
 // components/Reviews.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./Reviews.css"
 
 function Reviews() {
   const [reviews, setReviews] = useState([]);
@@ -31,37 +32,45 @@ function Reviews() {
   };
 
   return (
-    <div>
+    <div className="reviews-container">
       <h1>Reviews</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="review-form">
         <input
           type="text"
           name="album_id"
           placeholder="Album ID"
+          value={newReview.album_id}
           onChange={handleChange}
+          className="form-input"
         />
         <input
           type="text"
           name="member_id"
           placeholder="Member ID"
+          value={newReview.member_id}
           onChange={handleChange}
+          className="form-input"
         />
         <input
           type="number"
           name="rating"
           placeholder="Rating"
+          value={newReview.rating}
           onChange={handleChange}
+          className="form-input"
         />
         <textarea
           name="comment"
           placeholder="Comment"
+          value={newReview.comment}
           onChange={handleChange}
+          className="form-textarea"
         ></textarea>
-        <button type="submit">Add Review</button>
+        <button type="submit" className="form-button">Add Review</button>
       </form>
-      <ul>
+      <ul className="review-list">
         {reviews.map((review) => (
-          <li key={review.id}>
+          <li key={review.id} className="review-item">
             Album {review.album_id} by Member {review.member_id}:{" "}
             {review.comment} (Rating: {review.rating})
           </li>

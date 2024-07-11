@@ -1,14 +1,15 @@
-// components/Albums.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Albums() {
   const [albums, setAlbums] = useState([]);
   const [newAlbum, setNewAlbum] = useState({
     title: "",
     artist: "",
-    genre: "",
     release_date: "",
+    cover_image: "",
+    embed_link: "",
   });
 
   useEffect(() => {
@@ -16,8 +17,12 @@ function Albums() {
   }, []);
 
   const fetchAlbums = async () => {
-    const response = await axios.get("/albums");
-    setAlbums(response.data);
+    try {
+      const response = await axios.get("/albums");
+      setAlbums(response.data);
+    } catch (error) {
+      console.error("Failed to fetch albums:", error);
+    }
   };
 
   const handleChange = (e) => {
@@ -26,50 +31,45 @@ function Albums() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("/albums", newAlbum);
-    fetchAlbums();
+    try {
+      const response = await axios.post("/albums", newAlbum);
+      setAlbums([...albums, response.data]);
+      setNewAlbum({
+        title: "",
+        artist: "",
+        genre: "",
+        release_date: "",
+        cover_image_url: "",
+        embed_link: "",
+      });
+    } catch (error) {
+      console.error("Failed to add album:", error);
+    }
   };
 
   return (
-    <div>
-      <h1>Albums</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="artist"
-          placeholder="Artist"
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="genre"
-          placeholder="Genre"
-          onChange={handleChange}
-        />
-        <input
-          type="date"
-          name="release_date"
-          placeholder="Release Date"
-          onChange={handleChange}
-        />
-        <button type="submit">Add Album</button>
-      </form>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {albums.map((album) => (
-          <div key={album.id} style={{ flex: '1 0 30%', margin: '10px', border: '1px solid #ccc', padding: '10px' }}>
-            <h2>{album.title}</h2>
-            <p><strong>Artist:</strong> {album.artist}</p>
-            <p><strong>Genre:</strong> {album.genre}</p>
-            <p><strong>Release Date:</strong> {new Date(album.release_date).toLocaleDateString()}</p>
+    <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around" }}>
+      {albums.map((album) => (
+        <div
+          key={album.id}
+          style={{
+            flex: "1 0 calc(25% - 20px)", // Adjust width here
+            margin: "10px",
+            border: "1px solid #ccc",
+            padding: "10px",
+            minWidth: "150px", // Minimum width for uniformity
+            boxSizing: "border-box",
+          }}
+        >
+          <h2>{album.title}</h2>
+          <div style={{ height: "150px", overflow: "hidden", marginBottom: "8px" }}>
+            <img src={album.cover_image} alt={`${album.title} cover`} style={{ width: "100%", height: "100%", objectFit: "scale-down" }} />
           </div>
-        ))}
-      </div>
+          <p><strong>Artist:</strong> {album.artist}</p>
+          <p><strong>Release Date:</strong> {new Date(album.release_date).toLocaleDateString()}</p>
+          <iframe src={album.embed_link} style={{ width: "100%", height: "400px" }} allow="encrypted-media"></iframe>
+        </div>
+      ))}
     </div>
   );
 }

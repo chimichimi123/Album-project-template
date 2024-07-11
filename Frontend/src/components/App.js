@@ -3,21 +3,22 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Albums from "./AlbumList";
 import Members from "./Members";
 import Reviews from "./Reviews";
+import "./App.css"; // Import your CSS file
 
 function App() {
   return (
     <Router>
       <div>
         <nav>
-          <ul>
-            <li>
-              <Link to="/albums">Albums</Link>
+          <ul className="nav-list">
+            <li className="nav-item">
+              <Link className="nav-link" to="/albums">Albums</Link>
             </li>
-            <li>
-              <Link to="/members">Members</Link>
+            <li className="nav-item">
+              <Link className="nav-link" to="/members">Members</Link>
             </li>
-            <li>
-              <Link to="/reviews">Reviews</Link>
+            <li className="nav-item">
+              <Link className="nav-link" to="/reviews">Reviews</Link>
             </li>
           </ul>
         </nav>
