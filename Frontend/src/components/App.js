@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import AlbumList from "./Albums/AlbumList";
-import Members from "./Members/Members";
-import Reviews from "./Reviews/ReviewList";
+import Albums from "./AlbumList";
+import Members from "./Members";
+import Reviews from "./Reviews";
 
 function App() {
   return (
