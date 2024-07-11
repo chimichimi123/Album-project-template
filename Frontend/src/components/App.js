@@ -23,7 +23,7 @@ function App() {
         </nav>
 
         <Switch>
-          <Route path="/albums" component={Albums} />
+          <Route path="/albumlist" component={AlbumList} />
           <Route path="/members" component={Members} />
           <Route path="/reviews" component={Reviews} />
         </Switch>
