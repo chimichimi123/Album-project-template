@@ -60,13 +60,16 @@ function Albums() {
         />
         <button type="submit">Add Album</button>
       </form>
-      <ul>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {albums.map((album) => (
-          <li key={album.id}>
-            {album.title} by {album.artist}
-          </li>
+          <div key={album.id} style={{ flex: '1 0 30%', margin: '10px', border: '1px solid #ccc', padding: '10px' }}>
+            <h2>{album.title}</h2>
+            <p><strong>Artist:</strong> {album.artist}</p>
+            <p><strong>Genre:</strong> {album.genre}</p>
+            <p><strong>Release Date:</strong> {new Date(album.release_date).toLocaleDateString()}</p>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
