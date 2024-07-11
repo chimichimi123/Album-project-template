@@ -83,7 +83,6 @@ with app.app_context():
         review = Review(
             album_id=random.choice(albums).id,
             member_id=random.choice(members).id,
-            review_date=fake.date_between(start_date='-2y', end_date='today'),
             rating=random.randint(1, 5),
             comment=fake.text(max_nb_chars=200)
         )
