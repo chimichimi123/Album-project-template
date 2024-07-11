@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Albums() {
   const [albums, setAlbums] = useState([]);
@@ -8,6 +9,8 @@ function Albums() {
     title: "",
     artist: "",
     release_date: "",
+    cover_image: "",
+    embed_link: "",
     cover_image: "",
     embed_link: "",
   });
@@ -23,6 +26,12 @@ function Albums() {
     } catch (error) {
       console.error("Failed to fetch albums:", error);
     }
+    try {
+      const response = await axios.get("/albums");
+      setAlbums(response.data);
+    } catch (error) {
+      console.error("Failed to fetch albums:", error);
+    }
   };
 
   const handleChange = (e) => {
@@ -31,6 +40,20 @@ function Albums() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await axios.post("/albums", newAlbum);
+      setAlbums([...albums, response.data]);
+      setNewAlbum({
+        title: "",
+        artist: "",
+        genre: "",
+        release_date: "",
+        cover_image_url: "",
+        embed_link: "",
+      });
+    } catch (error) {
+      console.error("Failed to add album:", error);
+    }
     try {
       const response = await axios.post("/albums", newAlbum);
       setAlbums([...albums, response.data]);
