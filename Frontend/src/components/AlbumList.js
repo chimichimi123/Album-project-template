@@ -42,11 +42,11 @@ function Albums() {
         <div
           key={album.id}
           style={{
-            flex: "1 0 calc(25% - 20px)", // Adjust width here
+            flex: "1 0 calc(25% - 20px)",
             margin: "10px",
             border: "1px solid #ccc",
             padding: "10px",
-            minWidth: "150px", // Minimum width for uniformity
+            minWidth: "150px",
             boxSizing: "border-box",
           }}
         >
