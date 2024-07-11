@@ -1,8 +1,8 @@
-"""spotify API now has embeds
+"""empty message
 
-Revision ID: ae06c5e8f2f8
+Revision ID: 38cf7780a13a
 Revises: 
-Create Date: 2024-07-10 15:57:52.805617
+Create Date: 2024-07-10 21:20:08.358344
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ae06c5e8f2f8'
+revision = '38cf7780a13a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,17 +22,20 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=100), nullable=False),
     sa.Column('artist', sa.String(length=100), nullable=False),
-    sa.Column('genre', sa.String(length=50), nullable=False),
+    sa.Column('genre', sa.String(length=50), nullable=True),
     sa.Column('release_date', sa.Date(), nullable=False),
     sa.Column('cover_image', sa.String(length=255), nullable=True),
     sa.Column('embed_link', sa.String(length=255), nullable=True),
+    sa.Column('popularity', sa.Integer(), nullable=True),
+    sa.Column('label', sa.String(length=100), nullable=True),
+    sa.Column('tracks', sa.Text(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('members',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
     sa.Column('email', sa.String(length=100), nullable=False),
-    sa.Column('join_date', sa.DateTime(), nullable=True),
+    sa.Column('join_date', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
@@ -40,7 +43,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('album_id', sa.Integer(), nullable=False),
     sa.Column('member_id', sa.Integer(), nullable=False),
-    sa.Column('review_date', sa.DateTime(), nullable=True),
+    sa.Column('review_date', sa.DateTime(), nullable=False),
     sa.Column('rating', sa.Integer(), nullable=False),
     sa.Column('comment', sa.Text(), nullable=False),
     sa.ForeignKeyConstraint(['album_id'], ['albums.id'], name=op.f('fk_reviews_album_id_albums')),
