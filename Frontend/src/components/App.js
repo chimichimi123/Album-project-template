@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import Albums from "./Albums";
-import Members from "./Members";
-import Reviews from "./Reviews";
+import AlbumList from "./Albums/AlbumList";
+import Members from "./Members/Members";
+import Reviews from "./Reviews/ReviewList";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
         </nav>
 
         <Switch>
-          <Route path="/albums" component={Albums} />
+          <Route path="/albumlist" component={AlbumList} />
           <Route path="/members" component={Members} />
           <Route path="/reviews" component={Reviews} />
         </Switch>

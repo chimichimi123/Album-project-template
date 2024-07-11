@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function Albums() {
+function AlbumList() {
   const [albums, setAlbums] = useState([]);
   const [newAlbum, setNewAlbum] = useState({
     title: "",
@@ -71,4 +71,4 @@ function Albums() {
   );
 }
 
-export default Albums;
+export default AlbumList;
