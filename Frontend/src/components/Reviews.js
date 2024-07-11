@@ -1,6 +1,7 @@
 // components/Reviews.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./Reviews.css";
 
 const ReviewComponent = () => {
   const [reviews, setReviews] = useState([]);

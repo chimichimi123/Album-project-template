@@ -10,6 +10,7 @@ import Register from "./Register";
 import CheckLogin from "./CheckLogin";
 import LogOut from "./LogOut";
 import Profile from "./Profile";
+import "./App.css";
 
 import { AuthProvider } from "./AuthContext";
 
