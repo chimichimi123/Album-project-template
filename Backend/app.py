@@ -29,6 +29,34 @@ def handle_albums():
     albums = Album.query.all()
     return jsonify([album.to_dict() for album in albums]), 200
 
+@app.route('/albums/<int:album_id>', methods=['GET'])
+def get_album(album_id):
+    album = Album.query.get(album_id)
+    if not album:
+        return jsonify({'error': 'Album not found'}), 404
+
+    reviews = Review.query.filter_by(album_id=album_id).all()
+
+    album_data = {
+        'id': album.id,
+        'title': album.title,
+        'artist': album.artist,
+        'release_date': album.release_date.strftime('%Y-%m-%d'),
+        'cover_image': album.cover_image,
+        'genre': album.genre,
+        'popularity': album.popularity,
+        'label': album.label,
+        'tracks': album.tracks,
+        'embed_link': album.embed_link,
+        'reviews': [{'id': review.id,
+                     'member_name': review.member.name,
+                     'review_date': review.review_date.strftime('%Y-%m-%d'),
+                     'rating': review.rating,
+                     'comment': review.comment} for review in reviews]
+    }
+
+    return jsonify(album_data)
+
 @app.route('/members', methods=['GET', 'POST'])
 def handle_members():
     if request.method == 'POST':

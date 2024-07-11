@@ -21,7 +21,7 @@ class Album(db.Model, SerializerMixin):
     popularity = db.Column(db.Integer, nullable=True)
     label = db.Column(db.String(100), nullable=True)
     tracks = db.Column(db.Text, nullable=True)
-    reviews = db.relationship('Review', backref='album', lazy=True)
+    reviews = db.relationship('Review', backref='album')
 
 
 class Member(db.Model, SerializerMixin):
@@ -32,7 +32,7 @@ class Member(db.Model, SerializerMixin):
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     join_date = db.Column(db.DateTime, default=func.now(), nullable=False)
-    reviews = db.relationship('Review', backref='member', lazy=True)
+    reviews = db.relationship('Review', backref='member')
 
 
 class Review(db.Model, SerializerMixin):
@@ -48,5 +48,6 @@ class Review(db.Model, SerializerMixin):
     def __init__(self, album_id, member_id, rating, comment):
         self.album_id = album_id
         self.member_id = member_id
-        self.rating = max(1, min(5, rating))
+        self.rating = max(1, min(5, int(rating)))
         self.comment = comment
+        

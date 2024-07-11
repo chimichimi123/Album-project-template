@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Albums from "./AlbumList";
 import Members from "./Members";
 import Reviews from "./Reviews";
+import AlbumDetails from "./AlbumDetails";
 
 function App() {
   return (
@@ -23,7 +24,9 @@ function App() {
         </nav>
 
         <Switch>
-          <Route path="/albums" component={Albums} />
+          <Route path="/" exact component={Albums} />
+          <Route path="/albums" exact component={Albums} />
+          <Route path="/albums/:id" component={AlbumDetails} />
           <Route path="/members" component={Members} />
           <Route path="/reviews" component={Reviews} />
         </Switch>
