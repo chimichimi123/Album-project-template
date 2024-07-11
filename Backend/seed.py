@@ -40,10 +40,30 @@ with app.app_context():
         "Back in Black",
         "The Dark Side of the Moon",
         "The Wall",
-        "Abbey Road"
+        "Abbey Road",
+        "Hotel California",
+        "Rumours",
+        "Led Zeppelin IV",
+        "Sgt. Pepper's Lonely Hearts Club Band",
+        "Come On Over",
+        "Jagged Little Pill",
+        "21",
+        "Bad",
+        "1989",
+        "Future Nostalgia",
+        "Fearless",
+        "Born in the U.S.A.",
+        "Nevermind",
+        "Purple Rain",
+        "The Marshall Mathers LP",
+        "Goodbye Yellow Brick Road",
+        "Appetite for Destruction",
+        "Back to Black",
+        "A Night at the Opera",
+        "Tapestry"
     ]
 
-    # Fetchds the album data from Spotify API
+    # Fetchdes the album data from Spotify API
     def fetch_album_data(album_name):
         results = sp.search(q=f'album:{album_name}', type='album', limit=1)
         if results['albums']['items']:
@@ -55,7 +75,6 @@ with app.app_context():
         data = fetch_album_data(album_name)
         if data:
             release_date = data['release_date']
-            # Handling different date formats from Spotify API
             if len(release_date) == 4:
                 release_date = datetime.strptime(release_date, "%Y")
             elif len(release_date) == 7:
@@ -65,13 +84,18 @@ with app.app_context():
 
             embed_link = f"https://open.spotify.com/embed/album/{data['id']}?utm_source=generator&theme=0"
 
+            album_details = sp.album(data['id'])
+
             album = Album(
                 title=data['name'],
                 artist=data['artists'][0]['name'],
-                genre=', '.join(data.get('genres', [])),  # Safely get genres
+                genre=', '.join(album_details.get('genres', [])),
                 release_date=release_date,
                 cover_image=data['images'][0]['url'] if data['images'] else None,
-                embed_link=embed_link
+                embed_link=embed_link,
+                popularity=album_details.get('popularity'),
+                label=album_details.get('label'),
+                tracks=', '.join([track['name'] for track in album_details['tracks']['items']])
             )
             albums.append(album)
             db.session.add(album)
