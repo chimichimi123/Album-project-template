@@ -1,6 +1,7 @@
 // components/Members.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import './Members.css'
 
 function Members() {
   const [members, setMembers] = useState([]);
@@ -29,26 +30,30 @@ function Members() {
   };
 
   return (
-    <div>
+    <div className="members-container">
       <h1>Members</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="member-form">
         <input
           type="text"
           name="name"
           placeholder="Name"
+          value={newMember.name}
           onChange={handleChange}
+          className="form-input"
         />
         <input
           type="email"
           name="email"
           placeholder="Email"
+          value={newMember.email}
           onChange={handleChange}
+          className="form-input"
         />
-        <button type="submit">Add Member</button>
+        <button type="submit" className="form-button">Add Member</button>
       </form>
-      <ul>
+      <ul className="member-list">
         {members.map((member) => (
-          <li key={member.id}>
+          <li key={member.id} className="member-item">
             {member.name} ({member.email})
           </li>
         ))}

@@ -7,8 +7,11 @@ function Albums() {
   const [newAlbum, setNewAlbum] = useState({
     title: "",
     artist: "",
-    genre: "",
     release_date: "",
+    cover_image: "",
+    embed_link: "",
+    cover_image: "",
+    embed_link: "",
   });
 
   useEffect(() => {
@@ -16,8 +19,18 @@ function Albums() {
   }, []);
 
   const fetchAlbums = async () => {
-    const response = await axios.get("/albums");
-    setAlbums(response.data);
+    try {
+      const response = await axios.get("/albums");
+      setAlbums(response.data);
+    } catch (error) {
+      console.error("Failed to fetch albums:", error);
+    }
+    try {
+      const response = await axios.get("/albums");
+      setAlbums(response.data);
+    } catch (error) {
+      console.error("Failed to fetch albums:", error);
+    }
   };
 
   const handleChange = (e) => {
@@ -26,11 +39,38 @@ function Albums() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("/albums", newAlbum);
-    fetchAlbums();
+    try {
+      const response = await axios.post("/albums", newAlbum);
+      setAlbums([...albums, response.data]);
+      setNewAlbum({
+        title: "",
+        artist: "",
+        genre: "",
+        release_date: "",
+        cover_image_url: "",
+        embed_link: "",
+      });
+    } catch (error) {
+      console.error("Failed to add album:", error);
+    }
+    try {
+      const response = await axios.post("/albums", newAlbum);
+      setAlbums([...albums, response.data]);
+      setNewAlbum({
+        title: "",
+        artist: "",
+        genre: "",
+        release_date: "",
+        cover_image_url: "",
+        embed_link: "",
+      });
+    } catch (error) {
+      console.error("Failed to add album:", error);
+    }
   };
 
   return (
+
     <div
       style={{
         display: "flex",
@@ -42,6 +82,7 @@ function Albums() {
         <div
           key={album.id}
           style={{
+
             flex: "1 0 calc(25% - 20px)",
             margin: "10px",
             border: "1px solid #ccc",
@@ -51,6 +92,7 @@ function Albums() {
           }}
         >
           <h2>{album.title}</h2>
+
           <div
             style={{ height: "150px", overflow: "hidden", marginBottom: "8px" }}
           >

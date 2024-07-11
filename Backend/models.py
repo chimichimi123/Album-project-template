@@ -18,7 +18,6 @@ class Album(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     artist = db.Column(db.String(100), nullable=False)
-    genre = db.Column(db.String(50), nullable=True)
     release_date = db.Column(db.Date, nullable=False)
     cover_image = db.Column(db.String(255), nullable=True)
     embed_link = db.Column(db.String(255), nullable=True)
