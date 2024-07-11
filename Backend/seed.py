@@ -24,11 +24,13 @@ with app.app_context():
 
     members = []
     for _ in range(10):
+        password = fake.password()
         member = Member(
             name=fake.name(),
             email=fake.email(),
             join_date=fake.date_between(start_date='-5y', end_date='today')
         )
+        member.set_password(password)
         members.append(member)
         db.session.add(member)
 
