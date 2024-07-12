@@ -1,22 +1,23 @@
 // Logout.js
 import React, { useContext } from "react";
 import { AuthContext } from "./AuthContext";
-import { useHistory } from "react-router-dom";
+import "./CSS/LogOut.css";
 
 const Logout = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
-  const history = useHistory();
 
   const handleLogout = () => {
     logout();
   };
 
   return (
-    <div>
+    <div className="logout-container">
       {isAuthenticated ? (
-        <div>
+        <div className="logout-message">
           <p>You are logged in.</p>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleLogout} className="form-button">
+            Logout
+          </button>
         </div>
       ) : (
         <p>You are not logged in.</p>

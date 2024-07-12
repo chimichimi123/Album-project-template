@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "./AuthContext";
 import { Link } from "react-router-dom";
+import "./CSS/Login.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,24 +18,30 @@ const Login = () => {
   return (
     <div>
       <h2>Login</h2>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
-      <div style={{ marginTop: "20px" }}>
-        <p>If you don't already have an account create one here!</p>
-        <Link to="/register" style={{ textDecoration: "none" }}>
-          <button style={{ color: "inherit" }}>Register</button>
-        </Link>
+      <div className="login-form">
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="form-input"
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="form-input"
+        />
+        <button onClick={handleLogin} className="form-button">
+          Login
+        </button>
+        <div className="register-link">
+          <p>If you don't already have an account, create one here!</p>
+          <Link to="/register" style={{ textDecoration: "none" }}>
+            <button className="form-button">Register</button>
+          </Link>
+        </div>
       </div>
     </div>
   );

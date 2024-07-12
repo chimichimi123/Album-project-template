@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import AlbumDetails from "./AlbumDetails";
 import Login from "./Login";
 import Register from "./Register";
-import CheckLogin from "./CheckLogin";
 import LogOut from "./LogOut";
 import Profile from "./Profile";
 import Members from "./Members";
@@ -27,7 +26,6 @@ function App() {
           <Route path="/albums" exact component={Albums} />
           <Route path="/members" component={Members} />
           <Route path="/reviews" component={Reviews} />
-          <Route path="/check_login" component={CheckLogin} />
           <Route path="/" exact component={Albums} />
           <Route path="/profile" component={Profile} />
         </Switch>

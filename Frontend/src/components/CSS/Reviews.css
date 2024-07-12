@@ -41,6 +41,7 @@
 .review-list {
   list-style-type: none;
   padding: 0;
+  border-radius: 4px;
 }
 
 .review-item {
@@ -51,14 +52,9 @@
   border-radius: 4px;
 }
 
-.review-form {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .form-input,
 .form-textarea {
-  flex: 1;
+  width: calc(100% - 10px);
   margin-bottom: 10px;
   padding: 8px;
   font-size: 16px;
@@ -69,7 +65,7 @@
 .form-button {
   padding: 8px 16px;
   font-size: 16px;
-  background-color: #007bff;
+  background-color: #4c7c38;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -78,17 +74,4 @@
 
 .form-button:hover {
   background-color: #0056b3;
-}
-
-.review-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.review-item {
-  margin-bottom: 8px;
-  padding: 8px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
 }

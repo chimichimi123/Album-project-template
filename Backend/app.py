@@ -50,7 +50,7 @@ def login():
     user = Member.query.filter_by(email=email).first()
     if user and user.check_password(password):
         login_user(user)
-        return jsonify({'message': 'Login successful!', 'user': user.name}), 200
+        return jsonify({'message': 'Login successful!', 'user': user.to_dict()}), 200
     else:
         return jsonify({'message': 'Invalid email or password'}), 401
     
@@ -68,7 +68,7 @@ def protected():
 @app.route('/check_login')
 def check_login():
     if current_user.is_authenticated:
-        return jsonify({'logged_in': True, 'user': current_user.name})
+        return jsonify({'logged_in': True, 'user': current_user.to_dict()})
     else:
         return jsonify({'logged_in': False})
     
@@ -83,7 +83,9 @@ def create_tables():
 @app.route('/profile', methods=['GET'])
 @login_required
 def profile():
-    return jsonify({'name': current_user.name, 'email': current_user.email})
+    user_info = current_user.to_dict()
+    user_info['reviews'] = [review.to_dict() for review in current_user.reviews]
+    return jsonify(user_info)
 
 @app.route('/albums', methods=['GET', 'POST'])
 def handle_albums():
@@ -103,25 +105,8 @@ def get_album(album_id):
     if not album:
         return jsonify({'error': 'Album not found'}), 404
 
-    reviews = Review.query.filter_by(album_id=album_id).all()
-
-    album_data = {
-        'id': album.id,
-        'title': album.title,
-        'artist': album.artist,
-        'release_date': album.release_date.strftime('%Y-%m-%d'),
-        'cover_image': album.cover_image,
-        'genre': album.genre,
-        'popularity': album.popularity,
-        'label': album.label,
-        'tracks': album.tracks,
-        'embed_link': album.embed_link,
-        'reviews': [{'id': review.id,
-                     'member_name': review.member.name,
-                     'review_date': review.review_date.strftime('%Y-%m-%d'),
-                     'rating': review.rating,
-                     'comment': review.comment} for review in reviews]
-    }
+    album_data = album.to_dict()
+    album_data['reviews'] = [review.to_dict() for review in album.reviews]
 
     return jsonify(album_data)
 
