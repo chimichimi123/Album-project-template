@@ -1,7 +1,9 @@
 // components/Reviews.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./Reviews.css";
+
+import "./Reviews.css"
+
 
 const ReviewComponent = () => {
   const [reviews, setReviews] = useState([]);
@@ -72,6 +74,7 @@ const ReviewComponent = () => {
   };
 
   return (
+
     <div>
       <h2>Reviews</h2>
       <ul>
@@ -122,6 +125,7 @@ const ReviewComponent = () => {
             <button onClick={() => deleteReview(review.id)}>
               Delete Review
             </button>
+
           </li>
         ))}
       </ul>
