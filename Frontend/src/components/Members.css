@@ -49,3 +49,7 @@
   border: 1px solid #ddd;
   border-radius: 4px;
 }
+
+body {
+  background-color: rgb(0, 0, 0);
+}
