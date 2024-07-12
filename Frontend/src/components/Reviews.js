@@ -1,9 +1,7 @@
 // components/Reviews.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-import "./Reviews.css"
-
+import "./Reviews.css";
 
 const ReviewComponent = () => {
   const [reviews, setReviews] = useState([]);
@@ -11,6 +9,7 @@ const ReviewComponent = () => {
     album_id: "",
     member_id: "",
     rating: "",
+    comment: "",
   });
   const [editingComments, setEditingComments] = useState({});
 
@@ -74,107 +73,43 @@ const ReviewComponent = () => {
   };
 
   return (
-
-    <div>
-      <h2>Reviews</h2>
-      <ul>
+    <div className="reviews-container">
+      <h1>Reviews</h1>
+      <ul className="review-list">
         {reviews.map((review) => (
-          <li key={review.id}>
+          <li key={review.id} className="review-item">
+            <div><strong>Album ID:</strong> {review.album_id}</div>
+            <div><strong>Member ID:</strong> {review.member_id}</div>
+            <div><strong>Rating:</strong> {review.rating}</div>
             <div>
-              <strong>Album ID:</strong> {review.album_id}
-            </div>
-            <div>
-              <strong>Member ID:</strong> {review.member_id}
-            </div>
-            <div>
-              <strong>Rating:</strong> {review.rating}
-              <button
-                onClick={() =>
-                  updateReview(review.id, { rating: review.rating + 1 })
-                }
-              >
+              <button onClick={() => updateReview(review.id, { rating: review.rating + 1 })}>
                 Increase Rating
               </button>
-              <button
-                onClick={() =>
-                  updateReview(review.id, { rating: review.rating - 1 })
-                }
-              >
+              <button onClick={() => updateReview(review.id, { rating: review.rating - 1 })}>
                 Decrease Rating
               </button>
             </div>
-            <div>
-              <strong>Comment:</strong> {review.comment}
-            </div>
-            <div>
-              <textarea
-                style={{ width: "600px", height: "100px" }}
-                value={editingComments[review.id] || review.comment}
-                onChange={(e) => handleCommentChange(review.id, e.target.value)}
-              ></textarea>
-              <button
-                onClick={() =>
-                  updateReview(review.id, {
-                    comment: editingComments[review.id] || review.comment,
-                  })
-                }
-              >
-                Update Comment
-              </button>
-            </div>
-            <button onClick={() => deleteReview(review.id)}>
-              Delete Review
+            <div><strong>Comment:</strong> {review.comment}</div>
+            <textarea
+              className="form-textarea"
+              value={editingComments[review.id] || review.comment}
+              onChange={(e) => handleCommentChange(review.id, e.target.value)}
+            />
+            <button onClick={() => updateReview(review.id, { comment: editingComments[review.id] || review.comment })}>
+              Update Comment
             </button>
-
+            <button onClick={() => deleteReview(review.id)}>Delete Review</button>
           </li>
         ))}
       </ul>
       <h3>Add New Review</h3>
-      <div>
-        <label>
-          Album ID:
-          <input
-            type="text"
-            name="album_id"
-            value={newReview.album_id}
-            onChange={handleInputChange}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Member ID:
-          <input
-            type="text"
-            name="member_id"
-            value={newReview.member_id}
-            onChange={handleInputChange}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Rating:
-          <input
-            type="number"
-            name="rating"
-            value={newReview.rating}
-            onChange={handleInputChange}
-          />
-        </label>
-      </div>
-      <div>
-        <label>
-          Comment:
-          <input
-            type="text"
-            name="comment"
-            value={newReview.comment}
-            onChange={handleInputChange}
-          />
-        </label>
-      </div>
-      <button onClick={addReview}>Add Review</button>
+      <form onSubmit={(e) => { e.preventDefault(); addReview(); }} className="review-form">
+        <input type="text" name="album_id" placeholder="Album ID" value={newReview.album_id} onChange={handleInputChange} className="form-input" />
+        <input type="text" name="member_id" placeholder="Member ID" value={newReview.member_id} onChange={handleInputChange} className="form-input" />
+        <input type="number" name="rating" placeholder="Rating" value={newReview.rating} onChange={handleInputChange} className="form-input" />
+        <input type="text" name="comment" placeholder="Comment" value={newReview.comment} onChange={handleInputChange} className="form-input" />
+        <button type="submit" className="form-button">Add Review</button>
+      </form>
     </div>
   );
 };

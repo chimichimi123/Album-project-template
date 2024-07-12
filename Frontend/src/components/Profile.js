@@ -1,6 +1,7 @@
 // Profile.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./Profile.css";
 
 const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
@@ -19,12 +20,12 @@ const Profile = () => {
   };
 
   return (
-    <div>
+    <div className="profile-container">
       {userProfile ? (
-        <div>
+        <div className="profile-details">
           <h2>Profile</h2>
-          <p>Name: {userProfile.name}</p>
-          <p>Email: {userProfile.email}</p>
+          <p><strong>Name:</strong> {userProfile.name}</p>
+          <p><strong>Email:</strong> {userProfile.email}</p>
         </div>
       ) : (
         <p>Loading profile...</p>

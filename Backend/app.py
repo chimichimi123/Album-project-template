@@ -111,7 +111,6 @@ def get_album(album_id):
         'artist': album.artist,
         'release_date': album.release_date.strftime('%Y-%m-%d'),
         'cover_image': album.cover_image,
-        'genre': album.genre,
         'popularity': album.popularity,
         'label': album.label,
         'tracks': album.tracks,
